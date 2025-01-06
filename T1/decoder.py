@@ -1,4 +1,4 @@
-class decode:
+class decoder:
     #Inicializacao de variaveis, tamanho da instancia,
     #tabela de distancias e coordenadas dos pontos
     size = 0

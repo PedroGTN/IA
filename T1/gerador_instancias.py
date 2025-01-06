@@ -6,9 +6,14 @@
 #   entao adiciono um terco desse [desloc] e depois mais um numero aleatorio 
 #   que fica entre -[desloc]/3 e [desloc]/3 para gerar variedade
 
-import random as rnd
 import os
+import sys
+import random as rnd
 from datetime import datetime as dt
+
+#trocando folder
+inst_folder = sys.argv[1]
+os.chdir(inst_folder + '/')
 
 #colocando uma seed no gerador de numeros random
 rnd.seed(dt.now().timestamp()) 
