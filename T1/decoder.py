@@ -6,14 +6,17 @@ class decoder:
     coords = []
     
     def __init__(self, instancia):
+        #abrindo arquivo de instâncias
         arq = open(instancia, 'r')
         lines = arq.readlines()
+        #recebendo o tamanho da intância
         self.size = int(lines[0])
-        aux = [0] * self.size
+        #guardando as coordenadas da instância na memória
         for l in lines[1:]:
             split_coord = l.split()
             self.coords.append([float(split_coord[0]), float(split_coord[1])])
-
+        #criando a tabela de distâncias
+        aux = [0] * self.size
         for i in range(self.size):
             for j in range(self.size):
                 aux[j] = self.euclid_dist(i, j)
@@ -29,19 +32,19 @@ class decoder:
     
     #retorna um valor para o tour suprido
     def decode(self, tour):
+        #cria um tour com os indices da array junto dos alelos
         tour_mod = []
-
         for i in range(self.size):
             tour_mod.append([tour[i], i])
 
+        #organiza o tour baseado nos alelos
         sorted_tour = [[tour[0], 0]] 
         sorted_tour += sorted(tour_mod[1:])
 
+        #somando as distâncias baseado no tour organizado
         sum = 0
-
         for i in range(self.size - 1):
             sum += self.dist(sorted_tour[i][1], sorted_tour[i+1][1])
-
         sum += self.dist(sorted_tour[0][1], sorted_tour[self.size-1][1])
 
         return sum

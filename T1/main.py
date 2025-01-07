@@ -14,8 +14,8 @@ alg = rkga.rkga(time_limit, iteration_limit, inst_loc, res_loc)
 #mandando começar 
 alg.start()
 
+#recebendo o status final e printando
 status = alg.get_status()
-
 print("best value:", status[1])
 print("best cromossome:", status[0])
 print("elapsed time:", status[2])
