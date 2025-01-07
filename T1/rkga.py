@@ -10,6 +10,7 @@ class rkga:
         self.decoder = ddr.decoder(inst_loc)
         self.best_crom = None
         self.best_crom_value = math.inf
+        self.elapsed_time = 0
         self.time_limit = time_limit if time_limit != 0 else 60
         self.iteration_limit = iteration_limit if iteration_limit != 0 else math.inf
         self.inst_loc = inst_loc
@@ -74,9 +75,9 @@ class rkga:
 
     def start(self):
         init_time = time.time()
-        curr_time = init_time
+        self.elapsed_time = init_time - init_time
         it_counter = 0
-        while (curr_time - init_time) <= self.time_limit and it_counter < self.iteration_limit :
+        while self.elapsed_time <= self.time_limit and it_counter < self.iteration_limit :
             
             curr_rank = self.rank()
 
@@ -92,7 +93,7 @@ class rkga:
 
             self.population = self.new_pop(curr_rank, new_croms)
             
-            curr_time = time.time()
+            self.elapsed_time = time.time() - init_time
             it_counter += 1
 
         with open(self.res_loc, 'w') as arq:
@@ -101,9 +102,10 @@ class rkga:
             for i in self.best_crom: 
                 arq.write(str(i) + ' ')
             arq.write('\n')
+            arq.write("elapsed time: " + str(self.elapsed_time) + '\n')
 
     def get_status(self):
-        return [self.best_crom, self.best_crom_value]
+        return [self.best_crom, self.best_crom_value, self.elapsed_time]
 
 
         
