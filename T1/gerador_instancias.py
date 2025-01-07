@@ -9,28 +9,28 @@
 import os
 import sys
 import random as rnd
-from datetime import datetime as dt
+import time
 
 #trocando folder
-inst_folder = sys.argv[1]
+inst_folder = sys.argv[3]
 os.chdir(inst_folder + '/')
 
 #colocando uma seed no gerador de numeros random
-rnd.seed(dt.now().timestamp()) 
+rnd.seed(time.time()) 
 
 #numero usado pra deslocar o
 desloc = 750
 desloc_div3 = desloc/3
 
 #quantidade e tamanho das intancias, enunciado pedia por tamanho 6
-inst_num = 10
-inst_size = 6
+inst_num = int(sys.argv[1])
+inst_size = int(sys.argv[2])
 
 
 for inst in range(inst_num):
 
     #abrindo arquivo de instancias
-    with open("inst"+str(inst), 'w') as arq:
+    with open("inst"+str(inst)+".in", 'w') as arq:
 
         #criando variaveis que seram usadas para calcular as coordenadas
         loc_x = 0

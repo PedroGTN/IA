@@ -9,7 +9,7 @@ class decoder:
         arq = open(instancia, 'r')
         lines = arq.readlines()
         self.size = int(lines[0])
-        aux = [0] * 5
+        aux = [0] * self.size
         for l in lines[1:]:
             split_coord = l.split()
             self.coords.append([float(split_coord[0]), float(split_coord[1])])
@@ -34,13 +34,15 @@ class decoder:
         for i in range(self.size):
             tour_mod.append([tour[i], i])
 
-        tour_mod[1:].sort()
+        sorted_tour = [[tour[0], 0]] 
+        sorted_tour += sorted(tour_mod[1:])
+
         sum = 0
 
         for i in range(self.size - 1):
-            sum += self.dist(tour_mod[i][1], tour_mod[i+1][1])
+            sum += self.dist(sorted_tour[i][1], sorted_tour[i+1][1])
 
-        sum += self.dist(tour_mod[0][1], tour_mod[self.size-1][1])
+        sum += self.dist(sorted_tour[0][1], sorted_tour[self.size-1][1])
 
         return sum
 
