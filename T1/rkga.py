@@ -7,8 +7,8 @@ import math
 class rkga:
     #Inicializando o objeto com valores de limite de tempo,
     #limite de iteracoes e localizacao dos arquivos necessarios
-    def __init__(self, time_limit, iteration_limit, inst_loc, res_loc):
-        rnd.seed(time.time()) #inicializando rng com uma seed
+    def __init__(self, time_limit, iteration_limit, seed, inst_loc, res_loc):
+        rnd.seed(seed) #inicializando rng com uma seed
         self.decoder = ddr.decoder(inst_loc) #criando objeto do decoder
 
         #criando valores de status do final do algoritmo
@@ -38,28 +38,23 @@ class rkga:
     def rand_crom(self):
         crom = [0] * self.decoder.size
         for i in range(self.decoder.size):
-            crom[i] = rnd.random()
+            crom[i] = rnd.random() #gera numero (float) entre 0 e 1
         return crom
 
     #faz o rank da populacao com base no valor do decoder
     def rank(self):
         pop_rank = [None] * self.pop_size
 
+        
         for i in range(self.pop_size):
-            pop_rank[i] = [self.decoder.decode(self.population[i]), self.population[i]]
+            #criando um lista de lista, onde cada posicao tem 
+            #o valor de fitness na primeira posicao e na segunda
+            #temos o cromossomo do individuo em si
+            pop_rank[i] = [self.decoder.decode(self.population[i]), self.population[i]] 
 
         pop_rank.sort()
 
         return pop_rank
-
-    #faz o cruzamento de dois pais gerando um filho
-    def breed(self, pai1, pai2):
-        child = [0] * self.decoder.size
-
-        for i in range(self.decoder.size):
-            child[i] = pai1[i] if rnd.randint(0, 1) else pai2[i]
-
-        return child
 
     #gera um vetor de filhos baseado na pop atual
     def gen_children(self, size=3):
@@ -70,14 +65,25 @@ class rkga:
         for i in range(size):
             i, j = rnd.randint(0, self.pop_size-1), rnd.randint(0, self.pop_size-1)
             pai1 = self.population[i] if self.decoder.decode(self.population[i]) < self.decoder.decode(self.population[j]) else self.population[j]
+            
             i, j = rnd.randint(0, self.pop_size-1), rnd.randint(0, self.pop_size-1)
             pai2 = self.population[i] if self.decoder.decode(self.population[i]) < self.decoder.decode(self.population[j]) else self.population[j]
+            
             new_croms.append(self.breed(pai1, pai2))
 
         return new_croms
 
+    #faz o cruzamento de dois pais gerando um filho
+    def breed(self, pai1, pai2):
+        child = [0] * self.decoder.size
+
+        for i in range(self.decoder.size):
+            child[i] = pai1[i] if rnd.randint(0, 1) else pai2[i]
+
+        return child
+
     #cria uma populacao nova com elites, filhos e mutantes (cromossomos randos)
-    def new_pop(self, pop_rank, new_croms, e_size=4, c_size=3, m_size=3):
+    def new_pop(self, pop_rank, new_croms, e_size=4, m_size=3, c_size=3):
         newpop = [None] * e_size 
 
         for i in range(e_size):
@@ -93,9 +99,9 @@ class rkga:
     #loop principal do programa
     def start(self):
         #cria variaveis de controle 
+        it_counter = 0
         init_time = time.time()
         self.elapsed_time = init_time - init_time
-        it_counter = 0
 
         #loop principal
         while self.elapsed_time <= self.time_limit and it_counter < self.iteration_limit :

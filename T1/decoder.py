@@ -45,7 +45,7 @@ class decoder:
         sum = 0
         for i in range(self.size - 1):
             sum += self.dist(sorted_tour[i][1], sorted_tour[i+1][1])
-        sum += self.dist(sorted_tour[0][1], sorted_tour[self.size-1][1])
+        sum += self.dist(sorted_tour[0][1], sorted_tour[-1][1])
 
         return sum
     
@@ -59,14 +59,8 @@ class decoder:
         sorted_tour = [[tour[0], 0]] 
         sorted_tour += sorted(tour_mod[1:])
 
-        #somando as distâncias baseado no tour organizado
-        sum = 0
-        for i in range(self.size - 1):
-            sum += self.dist(sorted_tour[i][1], sorted_tour[i+1][1])
-        sum += self.dist(sorted_tour[0][1], sorted_tour[self.size-1][1])
-
+        #transformando o sorted_tour em um tour sem os valores de cromossomo
         final_tour = [0]*self.size
-
         for i in range(self.size):
             final_tour[i] = sorted_tour[i][1]
 

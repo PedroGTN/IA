@@ -27,5 +27,5 @@ os.system("python3 gerador_instancias_polar.py " + str(num_instâncias) + " " + 
 insts = os.listdir(inst_folder)
 for i in insts:
     inst = inst_folder + i
-    exec = "python3 main.py 0 200 " + inst + " resultados/"
+    exec = "python3 main.py 0 200 " + inst + " resultados/ 1234"
     os.system(exec)
