@@ -20,7 +20,7 @@ for r in res:
     os.remove(resp)
 
 
-os.system("python3 gerador_instancias.py " + str(num_instâncias) + " " + str(tam_instâncias) + ' ' + inst_folder)
+os.system("python3 gerador_instancias_polar.py " + str(num_instâncias) + " " + str(tam_instâncias) + ' ' + inst_folder)
 
 
 

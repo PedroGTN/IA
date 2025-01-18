@@ -16,6 +16,8 @@ alg.start()
 
 #recebendo o status final e printando
 status = alg.get_status()
-print("best value:", status[1])
-print("best cromossome:", status[0])
-print("elapsed time:", status[2])
+print("best value:", status[0])
+print("best tour:", status[1])
+print("best cromossome:", status[2])
+print("elapsed time:", status[3])
+print("elapsed iterations:", status[4])

@@ -12,9 +12,11 @@ class rkga:
         self.decoder = ddr.decoder(inst_loc) #criando objeto do decoder
 
         #criando valores de status do final do algoritmo
+        self.best_tour = None
         self.best_crom = None
         self.best_crom_value = math.inf
         self.elapsed_time = 0
+        self.elapsed_iterations = 0
 
         #inicializando as variaveis com base nos valores supridos
         self.time_limit = time_limit if time_limit != 0 else 60
@@ -118,19 +120,27 @@ class rkga:
             #atualiza as variaveis de controle
             self.elapsed_time = time.time() - init_time
             it_counter += 1
+            self.elapsed_iterations += 1
+
+        self.best_tour = self.decoder.decode_tour(self.best_crom)
 
         #escreve os resultados em um arquivo
         with open(self.res_loc, 'w') as arq:
             arq.write("best value: " + str(self.best_crom_value) + '\n')
+            arq.write("best tour: ")
+            for i in self.best_tour: 
+                arq.write(str(i) + ' ')
+            arq.write('\n')
             arq.write("best cromossome: ")
             for i in self.best_crom: 
                 arq.write(str(i) + ' ')
             arq.write('\n')
             arq.write("elapsed time: " + str(self.elapsed_time) + '\n')
+            arq.write("elapsed iterations: " + str(self.elapsed_iterations) + '\n')
 
     #retorna os status em um array
     def get_status(self):
-        return [self.best_crom, self.best_crom_value, self.elapsed_time]
+        return [self.best_crom_value, self.best_tour, self.best_crom, self.elapsed_time, self.elapsed_iterations]
 
 
         

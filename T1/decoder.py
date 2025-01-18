@@ -48,6 +48,29 @@ class decoder:
         sum += self.dist(sorted_tour[0][1], sorted_tour[self.size-1][1])
 
         return sum
+    
+    def decode_tour(self, tour):
+        #cria um tour com os indices da array junto dos alelos
+        tour_mod = []
+        for i in range(self.size):
+            tour_mod.append([tour[i], i])
+
+        #organiza o tour baseado nos alelos
+        sorted_tour = [[tour[0], 0]] 
+        sorted_tour += sorted(tour_mod[1:])
+
+        #somando as distâncias baseado no tour organizado
+        sum = 0
+        for i in range(self.size - 1):
+            sum += self.dist(sorted_tour[i][1], sorted_tour[i+1][1])
+        sum += self.dist(sorted_tour[0][1], sorted_tour[self.size-1][1])
+
+        final_tour = [0]*self.size
+
+        for i in range(self.size):
+            final_tour[i] = sorted_tour[i][1]
+
+        return final_tour
 
         
 
