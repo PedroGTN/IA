@@ -38,9 +38,11 @@ for inst in range(inst_num):
 
         for i in range(inst_size):
                 
+                #gerando um angulo e um raio para definir a posição do nó
                 angle = rnd.uniform(0, 360)
                 radius = desloc + desloc_div3 + rnd.uniform(-desloc_div3, desloc_div3)
                 
+                #usando seno e cosseno para definir as coordenadas x e y do nó
                 loc_x = math.cos(angle) * radius
                 loc_y = math.sin(angle) * radius
 
