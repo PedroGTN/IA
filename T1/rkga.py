@@ -61,7 +61,7 @@ class rkga:
         new_croms = []
 
         #seleciona dois pais aleatorios da pop e fica com o melhor, faz o mesmo uma 
-        #segunda vez, assim selecionando os pais que seram usados na funcao breed
+        #segunda vez, assim selecionando os pais que serao usados na funcao breed
         for i in range(size):
             i, j = rnd.randint(0, self.pop_size-1), rnd.randint(0, self.pop_size-1)
             pai1 = self.population[i] if self.decoder.decode(self.population[i]) < self.decoder.decode(self.population[j]) else self.population[j]
